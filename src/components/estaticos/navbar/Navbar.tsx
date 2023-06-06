@@ -1,4 +1,4 @@
-import React from 'react';
+
 import './Navbar.css'
 import { Box, Typography } from '@material-ui/core';
 import LogoutIcon from '@mui/icons-material/Logout';
