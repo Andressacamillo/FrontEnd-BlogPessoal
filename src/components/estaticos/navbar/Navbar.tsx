@@ -4,14 +4,14 @@ import { Box, Typography } from '@material-ui/core';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { TokenState } from '../../../store/tokens/tokensReducer';
+import { UserState } from '../../../store/tokens/tokensReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToken } from '../../../store/tokens/actions';
 import {toast} from 'react-toastify';
 
 
 function Navbar() {
-    const token = useSelector<TokenState, TokenState["tokens"]>(
+    const token = useSelector<UserState, UserState["tokens"]>(
         (state) => state.tokens
     );
     let navigate = useNavigate();

@@ -7,13 +7,14 @@ import { busca } from '../../../services/Service';
 import Postagem from '../../../models/Postagem';
 import ModalPostagem from '../modalPostagem/ModalPostagem';
 import { useSelector } from 'react-redux';
-import { TokenState } from '../../../store/tokens/tokensReducer';
+import { UserState } from '../../../store/tokens/tokensReducer';
+import { addToken } from "../../../store/tokens/actions";
 
 function ListaPostagem() {
 
     const [posts, setPosts] = useState<Postagem[]>([])
     let navigate = useNavigate();
-    const token = useSelector<TokenState, TokenState["tokens"]>(
+    const token = useSelector<UserState, UserState["tokens"]>(
         (state) => state.tokens
     );
 

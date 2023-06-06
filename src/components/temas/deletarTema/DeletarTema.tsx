@@ -7,8 +7,9 @@ import useLocalStorage from 'react-use-localstorage';
 import { buscaId, deleteId } from '../../../services/Service';
 import Tema from '../../../models/Tema';
 import { useSelector } from 'react-redux';
-import { TokenState } from '../../../store/tokens/tokensReducer';
+import { UserState } from '../../../store/tokens/tokensReducer';
 import { toast } from 'react-toastify';
+import { addToken } from "../../../store/tokens/actions";
 
 
 function DeletarTema() {
@@ -16,7 +17,7 @@ function DeletarTema() {
     const { id } = useParams<{ id: string }>();
     // const [token, setToken] = useLocalStorage('token');
     const [tema, setTema] = useState<Tema>()
-    const token = useSelector<TokenState, TokenState["tokens"]>(
+    const token = useSelector<UserState, UserState["tokens"]>(
         (state) => state.tokens
     );
 
