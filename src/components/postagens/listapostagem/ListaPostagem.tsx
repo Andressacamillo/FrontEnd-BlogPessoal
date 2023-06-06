@@ -58,9 +58,6 @@ function ListaPostagem() {
                                     Postagens
                                 </Typography>
                                 <Typography variant="h5" component="h2">
-                                    <img src={`${post.foto}`} alt="" className='imagempost' />
-                                </Typography>
-                                <Typography variant="h5" component="h2">
                                     {post.titulo}
                                 </Typography>
                                 <Typography variant="body2" component="p">

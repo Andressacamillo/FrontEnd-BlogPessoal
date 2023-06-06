@@ -1,51 +1,37 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
-import {Box} from '@mui/material';
-import './ListaPostagem.css';
+import React, { useState } from 'react'
+import { AppBar, Tab, Tabs, Typography } from '@material-ui/core';
+import { Box } from '@mui/material';
+import { TabContext, TabPanel } from '@material-ui/lab';
+import ListaPostagem from '../listapostagem/ListaPostagem';
+import './TabPostagem.css';
 
-function ListaPostagem() {
 
-  return (
-    <>
-      <Box m={2} >
-        <Card variant="outlined">
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Postagens
-            </Typography>
-            <Typography variant="h5" component="h2">
-              Título
-            </Typography>
-            <Typography variant="body2" component="p">
-              Texto da Postagem
-            </Typography>
-            <Typography variant="body2" component="p">
-              Tema
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Box display="flex" justifyContent="center" mb={1.5}>
-
-              <Link to="" className="text-decorator-none" >
-                <Box mx={1}>
-                  <Button variant="contained" className="marginLeft" size='small' color="primary" >
-                    atualizar
-                  </Button>
-                </Box>
-              </Link>
-              <Link to="" className="text-decorator-none">
-                <Box mx={1}>
-                  <Button variant="contained" size='small' color="secondary">
-                    deletar
-                  </Button>
-                </Box>
-              </Link>
-            </Box>
-          </CardActions>
-        </Card>
-      </Box>
-    </>)
+function TabPostagem() {
+    const [value, setValue] = useState('1')
+    function handleChange(event: React.ChangeEvent<{}>, newValue: string) {
+        setValue(newValue);
+    }
+    return (
+        <>
+            <TabContext value={value}>
+                <AppBar position="static">
+                    <Tabs centered indicatorColor="secondary" onChange={handleChange}>
+                        <Tab label="Todas as postagens" value="1" />
+                        <Tab label="Sobre-nós" value="2" />
+                    </Tabs>
+                </AppBar>
+                <TabPanel value="1" >
+                    <Box display="flex" flexWrap="wrap" justifyContent="center">
+                        <ListaPostagem />
+                    </Box>
+                </TabPanel>
+                <TabPanel value="2">
+                    <Typography variant="h5" gutterBottom color="textPrimary" component="h5" align="center" className="titulo">Sobre-nós</Typography>
+                    <Typography variant="body1" gutterBottom color="textPrimary" align="justify">Projeto Front-end do bootcamp Generation.
+                    </Typography>
+                </TabPanel>
+            </TabContext>
+        </>
+    );
 }
-
-export default ListaPostagem;
+export default TabPostagem;

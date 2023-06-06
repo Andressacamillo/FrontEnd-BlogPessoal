@@ -3,7 +3,6 @@ import { Container, Typography, TextField, Button, Select, InputLabel, MenuItem,
 import './CadastroPost.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Tema from '../../../models/Tema';
-import useLocalStorage from 'react-use-localstorage';
 import Postagem from '../../../models/Postagem';
 import { busca, buscaId, post, put } from '../../../services/Service';
 import { toast } from 'react-toastify';
@@ -151,11 +150,6 @@ function CadastroPost() {
                     value={postagem.texto}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => updatedPostagem(e)}
                     id="texto" label="texto" name="texto" variant="outlined" margin="normal" fullWidth />
-
-                <TextField
-                    value={postagem.foto}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => updatedPostagem(e)}
-                    id="foto" label="foto" name="foto" variant="outlined" margin="normal" fullWidth />
 
                 <FormControl >
                     <InputLabel id="demo-simple-select-helper-label">Tema </InputLabel>

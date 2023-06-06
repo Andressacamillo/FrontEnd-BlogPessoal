@@ -23,13 +23,13 @@ function Footer() {
                         <Typography variant="h5" align="center" gutterBottom>Siga-nos nas redes sociais </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" justifyContent="center">
-                        <a href="https://www.linkedin.com/in/giselle-de-souza-gabriel/" target="_blank">
+                        <a href="https://www.linkedin.com/in/andressa-camillo-082471200/" target="_blank">
                             <LinkedInIcon className='redes' />
                         </a>
-                        <a href="https://github.com/gisellesouzaa" target="_blank">
+                        <a href="https://github.com/Andressacamillo" target="_blank">
                             <GithubIcon className='redes' />
                         </a>
-                        <a href="https://api.whatsapp.com/send?phone=5511999059579&text=Ol%C3%A1!%20Tudo%20bem%3F%20Vi%20seu%20portf%C3%B3lio" target="_blank">
+                        <a href="https://api.whatsapp.com/send?phone=5511993291856" target="_blank">
                             <WhatsAppIcon className='redes' />
                         </a>
                     </Box>
@@ -40,7 +40,7 @@ function Footer() {
                     </Box>
                     <Box>
                         <a target="_blank" href="https://brasil.generation.org">
-                            <Typography variant="subtitle2" className='textos' align="center">Desenvolvedora: Giselle Souza</Typography>
+                            <Typography variant="subtitle2" className='textos' align="center">Desenvolvedora: Andressa Camillo</Typography>
                         </a>
                     </Box>
                 </Box>

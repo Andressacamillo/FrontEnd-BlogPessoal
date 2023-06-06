@@ -1,30 +1,30 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Container, Typography, TextField, Button, Select, InputLabel, MenuItem, FormControl, FormHelperText } from "@material-ui/core"
-import './CadastroPost.css';
-import { useNavigate, useParams } from 'react-router-dom';
-import Tema from '../../../models/Tema';
-import useLocalStorage from 'react-use-localstorage';
+import React, { useEffect, useState } from 'react'
+import { Typography, Button, Card, CardActions, CardContent } from "@material-ui/core"
+import { Box } from '@mui/material';
+import './DeletarPostagem.css';
 import Postagem from '../../../models/Postagem';
-import { busca, buscaId, post, put } from '../../../services/Service';
+import { useNavigate, useParams } from 'react-router-dom';
+import useLocalStorage from 'react-use-localstorage';
+import { buscaId, deleteId } from '../../../services/Service';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
 
-function CadastroPost() {
+function DeletarPostagem() {
+
     let navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
-    const [temas, setTemas] = useState<Tema[]>([])
     // const [token, setToken] = useLocalStorage('token');
     const token = useSelector<TokenState, TokenState["tokens"]>(
         (state) => state.tokens
     );
+    const [post, setPosts] = useState<Postagem>()
 
     useEffect(() => {
         if (token == "") {
-            // alert("Você precisa estar logado")
             toast.error('Você precisa estar logado', {
                 position: "top-right",
-                autoClose: 2000,
+                autoClose: 3500,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,
@@ -32,154 +32,81 @@ function CadastroPost() {
                 theme: "colored",
                 progress: undefined,
             });
+            navigate("/login")
 
-                navigate("/login")
-            }
+        }
     }, [token])
 
-    const [tema, setTema] = useState<Tema>(
-        {
-            id: 0,
-            descricao: ''
-        })
-    const [postagem, setPostagem] = useState<Postagem>({
-        id: 0,
-        titulo: '',
-        texto: '',
-        foto: '',
-        data: '',
-        tema: null
-    })
-
     useEffect(() => {
-        setPostagem({
-            ...postagem,
-            tema: tema
-        })
-    }, [tema])
-
-    useEffect(() => {
-        getTemas()
         if (id !== undefined) {
-            findByIdPostagem(id)
+            findById(id)
         }
     }, [id])
 
-    async function getTemas() {
-        await busca("/temas", setTemas, {
+    async function findById(id: string) {
+        buscaId(`/postagens/${id}`, setPosts, {
             headers: {
                 'Authorization': token
             }
         })
     }
 
-    async function findByIdPostagem(id: string) {
-        await buscaId(`postagens/${id}`, setPostagem, {
+    function sim() {
+        navigate('/posts')
+        deleteId(`/postagens/${id}`, {
             headers: {
                 'Authorization': token
             }
-        })
+        });
+        // alert('Postagem deletada com sucesso');
+        toast.success('Postagem deletada com sucesso', {
+            position: "top-right",
+            autoClose: 3500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            theme: "colored",
+            progress: undefined,
+        });
     }
 
-    function updatedPostagem(e: ChangeEvent<HTMLInputElement>) {
-
-        setPostagem({
-            ...postagem,
-            [e.target.name]: e.target.value,
-            tema: tema
-        })
-
-    }
-
-    async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
-        e.preventDefault()
-
-        if (id !== undefined) {
-            put(`/postagens`, postagem, setPostagem, {
-                headers: {
-                    'Authorization': token
-                }
-            })
-            // alert('Postagem atualizada com sucesso');
-            toast.success('Postagem atualizada com sucesso', {
-                position: "top-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: false,
-                theme: "colored",
-                progress: undefined,
-            });
-        } else {
-            post(`/postagens`, postagem, setPostagem, {
-                headers: {
-                    'Authorization': token
-                }
-            })
-            toast.success('Postagem cadastrada com sucesso', {
-                position: "top-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: false,
-                theme: "colored",
-                progress: undefined,
-            });
-            // alert('Postagem cadastrada com sucesso');
-        }
-        back()
-
-    }
-
-    function back() {
+    function nao() {
         navigate('/posts')
     }
 
     return (
-        <Container maxWidth="sm" className="topo">
-            <form onSubmit={onSubmit}>
-                <Typography variant="h3" color="textSecondary" component="h1" align="center" >Formulário de cadastro postagem</Typography>
+        <>
+            <Box m={2}>
+                <Card variant="outlined" >
+                    <CardContent>
+                        <Box justifyContent="center">
+                            <Typography color="textSecondary" gutterBottom>
+                                Deseja deletar a Postagem:
+                            </Typography>
+                            <Typography color="textSecondary" >
+                                {post?.titulo}
+                            </Typography>
+                        </Box>
 
-                <TextField
-                    value={postagem.titulo}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => updatedPostagem(e)}
-                    id="titulo" label="titulo" name="titulo" variant="outlined" margin="normal" fullWidth />
-
-                <TextField
-                    value={postagem.texto}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => updatedPostagem(e)}
-                    id="texto" label="texto" name="texto" variant="outlined" margin="normal" fullWidth />
-
-                <TextField
-                    value={postagem.foto}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => updatedPostagem(e)}
-                    id="foto" label="foto" name="foto" variant="outlined" margin="normal" fullWidth />
-
-                <FormControl >
-                    <InputLabel id="demo-simple-select-helper-label">Tema </InputLabel>
-                    <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        onChange={(e) => buscaId(`/temas/${e.target.value}`, setTema, {
-                            headers: {
-                                'Authorization': token
-                            }
-                        })}>
-                        {
-                            temas.map(tema => (
-                                <MenuItem value={tema.id}>{tema.descricao}</MenuItem>
-                            ))
-                        }
-                    </Select>
-                    <FormHelperText>Escolha um tema para a postagem</FormHelperText>
-                    <Button type="submit" variant="contained" color="primary">
-                        Finalizar
-                    </Button>
-                </FormControl>
-            </form>
-        </Container>
-    )
+                    </CardContent>
+                    <CardActions>
+                        <Box display="flex" justifyContent="start" ml={1.0} mb={2} >
+                            <Box mx={2}>
+                                <Button onClick={sim} variant="contained" className="marginLeft" size='large' color="primary">
+                                    Sim
+                                </Button>
+                            </Box>
+                            <Box>
+                                <Button onClick={nao} variant="contained" size='large' color="secondary">
+                                    Não
+                                </Button>
+                            </Box>
+                        </Box>
+                    </CardActions>
+                </Card>
+            </Box>
+        </>
+    );
 }
-export default CadastroPost;
+export default DeletarPostagem;

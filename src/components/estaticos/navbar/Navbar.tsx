@@ -49,12 +49,6 @@ function Navbar() {
                 </Box>
             </Link>
 
-            <Link to="/galeria">
-                <Box className="itemMenu" mx={1} >
-                    <p>galeria</p>
-                </Box>
-            </Link>
-
             <Box mx={1} >
                 <img className="logo_principal" src="src\images\logo_vetor.png" alt="" />
             </Box>
@@ -68,12 +62,6 @@ function Navbar() {
             <Link to="/temas">
                 <Box className="itemMenu" mx={1} >
                     <p>temas</p>
-                </Box>
-            </Link>
-
-            <Link to="/usuarios">
-                <Box className="itemMenu" mx={1} >
-                    <p>usuarios</p>
                 </Box>
             </Link>
 
